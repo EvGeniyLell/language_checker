@@ -1,0 +1,21 @@
+name: languagechecker
+description: A sample command-line application.
+version: 0.0.1
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ^3.5.4
+
+# Add regular dependencies here.
+dependencies:
+  freezed_annotation: any
+  meta: ^1.16.0
+  path: ^1.9.1
+  xml2json: ^6.2.5
+
+dev_dependencies:
+  build_runner: ^2.4.13
+  freezed: ^2.5.7
+  json_serializable: ^6.9.0
+  lints: ^5.0.0
+  test: ^1.25.12

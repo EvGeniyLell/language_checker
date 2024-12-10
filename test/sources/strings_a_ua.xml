@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name_of_feature">Функція "A".</string>
+    <string name="welcome_message">Привіт, %1$s! У вас %2$d нових повідомлень.</string>
+    <plurals name="match_available">
+        <item quantity="one">%1$s: %2$d співпадіння.</item>
+        <item quantity="few">%1$s: %2$d співпадіннь.</item>
+        <item quantity="other">%1$s: %2$d matches.</item>
+    </plurals>
+</resources>
