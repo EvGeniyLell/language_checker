@@ -1,9 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:languagechecker/src/android/dtos/resource_plural_dto.dart';
-import 'package:languagechecker/src/android/dtos/resource_string_dto.dart';
-import 'package:languagechecker/src/android/dtos/resources_dto.dart';
 import 'package:languagechecker/src/common/common.dart';
+import 'package:languagechecker/src/get_localizations_strategies/get_android_xml_localizations_strategy/dtos/resource_plural_dto.dart';
+import 'package:languagechecker/src/get_localizations_strategies/get_android_xml_localizations_strategy/dtos/resource_string_dto.dart';
+import 'package:languagechecker/src/get_localizations_strategies/get_android_xml_localizations_strategy/dtos/resources_dto.dart';
 
 part 'localization_dto.freezed.dart';
 part 'localization_dto.g.dart';

@@ -15,6 +15,11 @@ class LocalizationItemArgument with _$LocalizationItemArgument {
       _$LocalizationItemArgumentFromJson(json);
 }
 
+enum LocalizationItemArgumentPositionType {
+  byTag,
+  inOrder,
+}
+
 enum LocalizationItemArgumentType {
   string,
   int,
