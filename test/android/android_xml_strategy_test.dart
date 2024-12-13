@@ -42,7 +42,7 @@ void main() {
           argumentIndex += 1) {
         final lArgument = lItem.arguments[argumentIndex];
         final rArgument = rItem.arguments[argumentIndex];
-        expect(lArgument.tag, rArgument.tag);
+        expect(lArgument.position, rArgument.position);
         expect(lArgument.type, rArgument.type);
       }
     }

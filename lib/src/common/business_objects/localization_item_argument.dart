@@ -3,11 +3,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'localization_item_argument.freezed.dart';
 part 'localization_item_argument.g.dart';
 
-
 @freezed
 class LocalizationItemArgument with _$LocalizationItemArgument {
   const factory LocalizationItemArgument({
-    required String? tag,
+    required LocalizationItemArgumentPosition position,
     required LocalizationItemArgumentType type,
   }) = _LocalizationItemArgument;
 
@@ -15,13 +14,26 @@ class LocalizationItemArgument with _$LocalizationItemArgument {
       _$LocalizationItemArgumentFromJson(json);
 }
 
-enum LocalizationItemArgumentPositionType {
-  byTag,
-  inOrder,
-}
-
 enum LocalizationItemArgumentType {
   string,
   int,
   double,
+}
+
+@freezed
+class LocalizationItemArgumentPosition with _$LocalizationItemArgumentPosition {
+  const factory LocalizationItemArgumentPosition({
+    required int index,
+    required LocalizationItemArgumentPositionType type,
+  }) = _LocalizationItemArgumentPosition;
+
+  factory LocalizationItemArgumentPosition.fromJson(
+    Map<String, dynamic> json,
+  ) =>
+      _$LocalizationItemArgumentPositionFromJson(json);
+}
+
+enum LocalizationItemArgumentPositionType {
+  byTag,
+  inOrder,
 }

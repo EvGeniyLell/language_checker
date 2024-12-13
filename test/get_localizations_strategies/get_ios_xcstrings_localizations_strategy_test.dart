@@ -19,11 +19,17 @@ void main() {
           expect(item.key, 'welcome_message');
           expect(item.arguments, [
             const LocalizationItemArgument(
-              tag: 'tag:1',
+              position: LocalizationItemArgumentPosition(
+                index: 1,
+                type: LocalizationItemArgumentPositionType.byTag,
+              ),
               type: LocalizationItemArgumentType.string,
             ),
             const LocalizationItemArgument(
-              tag: 'tag:2',
+              position: LocalizationItemArgumentPosition(
+                index: 2,
+                type: LocalizationItemArgumentPositionType.byTag,
+              ),
               type: LocalizationItemArgumentType.int,
             ),
           ]);
@@ -33,11 +39,17 @@ void main() {
           expect(item.key, 'match_available');
           expect(item.arguments, [
             const LocalizationItemArgument(
-              tag: 'tag:1',
+              position: LocalizationItemArgumentPosition(
+                index: 1,
+                type: LocalizationItemArgumentPositionType.inOrder,
+              ),
               type: LocalizationItemArgumentType.string,
             ),
             const LocalizationItemArgument(
-              tag: 'tag:2',
+              position: LocalizationItemArgumentPosition(
+                index: 2,
+                type: LocalizationItemArgumentPositionType.inOrder,
+              ),
               type: LocalizationItemArgumentType.int,
             ),
           ]);
@@ -46,7 +58,10 @@ void main() {
           expect(item.key, 'downloaded_files');
           expect(item.arguments, [
             const LocalizationItemArgument(
-              tag: 'tag:1',
+              position: LocalizationItemArgumentPosition(
+                index: 1,
+                type: LocalizationItemArgumentPositionType.byTag,
+              ),
               type: LocalizationItemArgumentType.int,
             ),
           ]);

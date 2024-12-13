@@ -52,7 +52,10 @@ extension LocalizationDtoToBo on LocalizationDto {
     final arguments = <LocalizationItemArgument>[
       ...ord.map((m) {
         return LocalizationItemArgument(
-          tag: 'ord:${ordIndex++}',
+          position: LocalizationItemArgumentPosition(
+            index: ++ordIndex,
+            type: LocalizationItemArgumentPositionType.inOrder,
+          ),
           type: switch (m.group(1)) {
             '%s' => LocalizationItemArgumentType.string,
             '%d' => LocalizationItemArgumentType.int,
@@ -62,8 +65,18 @@ extension LocalizationDtoToBo on LocalizationDto {
         );
       }),
       ...tag.map((m) {
+        final positionIndex = int.tryParse(m.group(1) ?? '');
+        if (positionIndex == null) {
+          throw UnimplementedError(
+            'Cannot parse argument position index from ${m.group(1)}'
+            ' in message $message',
+          );
+        }
         return LocalizationItemArgument(
-          tag: 'tag:${m.group(1)}',
+          position: LocalizationItemArgumentPosition(
+            index: positionIndex,
+            type: LocalizationItemArgumentPositionType.byTag,
+          ),
           type: switch (m.group(2)) {
             r'$s' => LocalizationItemArgumentType.string,
             r'$d' => LocalizationItemArgumentType.int,

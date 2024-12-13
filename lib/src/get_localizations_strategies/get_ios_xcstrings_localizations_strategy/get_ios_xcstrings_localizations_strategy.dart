@@ -154,7 +154,10 @@ extension StringLocalizationUnitDtoToBo on StringLocalizationUnitDto {
       ...ord.map((m) {
         print('@@@ ord m: ${m.group(0)} in $value');
         return LocalizationItemArgument(
-          tag: 'ord:${ordIndex++}',
+          position: LocalizationItemArgumentPosition(
+            index: ++ordIndex,
+            type: LocalizationItemArgumentPositionType.inOrder,
+          ),
           type: switch (m.group(1)) {
             '%@' => LocalizationItemArgumentType.string,
             '%lld' => LocalizationItemArgumentType.int,
@@ -164,9 +167,19 @@ extension StringLocalizationUnitDtoToBo on StringLocalizationUnitDto {
         );
       }),
       ...tag.map((m) {
+        final positionIndex = int.tryParse(m.group(1) ?? '');
+        if (positionIndex == null) {
+          throw UnimplementedError(
+            'Cannot parse argument position index from ${m.group(1)}'
+            ' in value $value',
+          );
+        }
         print('@@@ tag m: ${m.group(0)} in $value');
         return LocalizationItemArgument(
-          tag: 'tag:${m.group(1)}',
+          position: LocalizationItemArgumentPosition(
+            index: positionIndex,
+            type: LocalizationItemArgumentPositionType.byTag,
+          ),
           type: switch (m.group(2)) {
             r'$@' => LocalizationItemArgumentType.string,
             r'$lld' => LocalizationItemArgumentType.int,

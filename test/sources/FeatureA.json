@@ -103,59 +103,6 @@
         }
       }
     },
-    "test%@%lld%lf" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "test%1$@%#@arg2@%#@arg3@"
-          },
-          "substitutions" : {
-            "arg2" : {
-              "argNum" : 2,
-              "formatSpecifier" : "lld",
-              "variations" : {
-                "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
-                    }
-                  },
-                  "other" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
-                    }
-                  }
-                }
-              }
-            },
-            "arg3" : {
-              "argNum" : 3,
-              "formatSpecifier" : "lf",
-              "variations" : {
-                "plural" : {
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
-                    }
-                  },
-                  "other" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "welcome_message%@%lld" : {
       "comment" : "Welcome message",
       "extractionState" : "manual",
