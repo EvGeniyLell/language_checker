@@ -8,7 +8,7 @@ void main() {
   group('GetIosXcstringsLocalizationsStrategy', () {
     void expectAStrategyItem(Localization localization, {required String key}) {
       final item = localization.items.firstWhere((i) => i.key == key);
-      print(item);
+
       switch (key) {
         case 'name_of_feature':
           expect(item.key, 'name_of_feature');

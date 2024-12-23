@@ -94,7 +94,6 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
         }
       }
     }
-    print(jsonEncode(map));
   }
 }
 
@@ -152,7 +151,6 @@ extension StringLocalizationUnitDtoToBo on StringLocalizationUnitDto {
     int ordIndex = 0;
     final arguments = <LocalizationItemArgument>[
       ...ord.map((m) {
-        print('@@@ ord m: ${m.group(0)} in $value');
         return LocalizationItemArgument(
           position: LocalizationItemArgumentPosition(
             index: ++ordIndex,
@@ -174,7 +172,7 @@ extension StringLocalizationUnitDtoToBo on StringLocalizationUnitDto {
             ' in value $value',
           );
         }
-        print('@@@ tag m: ${m.group(0)} in $value');
+
         return LocalizationItemArgument(
           position: LocalizationItemArgumentPosition(
             index: positionIndex,
@@ -213,17 +211,13 @@ extension StringLocalizationDtoToBo on StringLocalizationDto {
     final arguments = stringUnit?.toArguments() ??
         variation?.toArguments() ??
         substitutions
-            ?.map((sub) {
-              print('>>> sub: $sub');
-              return sub.toArguments();
-            })
+            ?.map((sub) => sub.toArguments())
             .expand((e) => e)
             .toList() ??
         [];
 
     final resolvedKey = key.replaceAll(RegExp('(%@|%lld|%lf)'), '');
-    print('>>> StringLocalizationDto: $this');
-    print('key: $resolvedKey\nmessage: $message\narguments: $arguments');
+
     return LocalizationItem(
       key: resolvedKey,
       message: message ?? '#Unread#',
