@@ -5,5 +5,5 @@ abstract class GetLocalizationsStrategy {
   const GetLocalizationsStrategy();
 
   /// Get the localizations from the file.
-  Task<LocalizationBundle> call(String filepath);
+  Task<LocalizationBundle> call(List<String> filePaths);
 }

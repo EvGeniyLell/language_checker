@@ -12,12 +12,22 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
   const GetIosXcstringsLocalizationsStrategy();
 
   @override
-  Task<LocalizationBundle> call(String filepath) {
+  Task<LocalizationBundle> call(List<String> filePaths) {
     return runTaskSafely(() async {
-      final jsonMap = await jsonFromFile(filepath);
+      if (filePaths.length != 1) {
+        throw UnexpectedException(
+          'Expected exactly one file path, but got ${filePaths.length}',
+        );
+      }
+
+      final filePath = filePaths.first;
+      final jsonMap = await jsonFromFile(filePath);
       final dto = LocalizationDto.fromJson(jsonMap);
-      //print(dto);
-      return dto.toBoList();
+
+      return LocalizationBundle.iosXCString(
+        path: filePath,
+        localizations: dto.toBoList(),
+      );
     });
   }
 
@@ -98,7 +108,7 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
 }
 
 extension LocalizationDtoToBo on LocalizationDto {
-  LocalizationBundle toBoList() {
+  List<Localization> toBoList() {
     final Map<String, Localization> localizationsMap = {};
 
     Localization addItemToLocalization(

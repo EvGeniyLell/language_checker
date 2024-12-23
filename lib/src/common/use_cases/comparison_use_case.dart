@@ -36,21 +36,21 @@ class BundleComparer extends Comparer {
   List<ComparisonException> call() {
     final exceptions = <ComparisonException>[];
 
-    if (lBundle.isEmpty) {
+    if (lBundle.localizations.isEmpty) {
       return exceptions..add(ComparisonException.emptyBundle(lBundle));
     }
 
-    if (rBundle.isEmpty) {
+    if (rBundle.localizations.isEmpty) {
       return exceptions..add(ComparisonException.emptyBundle(rBundle));
     }
 
-    if (lBundle.length != rBundle.length) {
+    if (lBundle.localizations.length != rBundle.localizations.length) {
       return exceptions
         ..add(ComparisonException.mismatchedBundleLength(lBundle, rBundle));
     }
 
     final languageKeys = <String>{};
-    for (final lLocalization in lBundle) {
+    for (final lLocalization in lBundle.localizations) {
       if (languageKeys.contains(lLocalization.languageKey)) {
         exceptions.add(
           ComparisonException.duplicateLocalizationInBundle(
@@ -62,12 +62,15 @@ class BundleComparer extends Comparer {
       }
       languageKeys.add(lLocalization.languageKey);
 
-      final rLocalization = rBundle.firstWhereOrNull((r) {
+      final rLocalization = rBundle.localizations.firstWhereOrNull((r) {
         return r.languageKey == lLocalization.languageKey;
       });
       if (rLocalization == null) {
         exceptions.add(
-          ComparisonException.missLocalizationInBundle(rBundle, lLocalization),
+          ComparisonException.missingLocalizationInBundle(
+            rBundle,
+            lLocalization,
+          ),
         );
       } else {
         exceptions.addAll(
@@ -123,7 +126,7 @@ class LocalizationComparer extends Comparer {
       });
       if (rItem == null) {
         exceptions.add(
-          ComparisonException.missItemInLocalization(
+          ComparisonException.missingItemInLocalization(
             bundleComparer.lBundle,
             lLocalization,
             lItem,
@@ -159,7 +162,7 @@ class ItemComparer extends Comparer {
     if (lItem.key != rItem.key) {
       return exceptions
         ..add(
-          ComparisonException.mismatchedLocalizationItemKey(
+          ComparisonException.mismatchedItemKey(
             localizationComparer.bundleComparer.lBundle,
             localizationComparer.lLocalization,
             lItem,
@@ -170,7 +173,7 @@ class ItemComparer extends Comparer {
 
     if (lItem.arguments.length != rItem.arguments.length) {
       exceptions.add(
-        ComparisonException.mismatchedLocalizationItemArgumentsLength(
+        ComparisonException.mismatchedArgumentsLength(
           localizationComparer.bundleComparer.lBundle,
           localizationComparer.lLocalization,
           lItem,
@@ -192,7 +195,7 @@ class ItemComparer extends Comparer {
       });
       if (rArg == null) {
         exceptions.add(
-          ComparisonException.missArgumentInLocalizationItem(
+          ComparisonException.missingArgumentInItem(
             localizationComparer.bundleComparer.lBundle,
             localizationComparer.lLocalization,
             lItem,
@@ -204,7 +207,7 @@ class ItemComparer extends Comparer {
 
     for (final rArg in rUnusedArguments) {
       exceptions.add(
-        ComparisonException.extraArgumentInLocalizationItem(
+        ComparisonException.extraArgumentInItem(
           localizationComparer.bundleComparer.lBundle,
           localizationComparer.lLocalization,
           lItem,

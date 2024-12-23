@@ -14,13 +14,27 @@ class GetAndroidXmlLocalizationsStrategy extends GetLocalizationsStrategy {
   const GetAndroidXmlLocalizationsStrategy();
 
   @override
-  Task<LocalizationBundle> call(String filepath) {
+  Task<LocalizationBundle> call(List<String> filePaths) {
     return runTaskSafely(() async {
-      final jsonMap = await jsonFromFile(filepath);
-      final dto = LocalizationDto.fromJson(jsonMap);
-      final languageKey = getLanguageKeyFromFileName(filepath);
-      final bo = dto.toBo(languageKey: languageKey);
-      return [bo];
+      if (filePaths.isEmpty) {
+        throw UnexpectedException(
+          'Expected at least one file path, but got none',
+        );
+      }
+
+      final localizations = await Future.wait(
+        filePaths.map((filepath) async {
+          final jsonMap = await jsonFromFile(filepath);
+          final dto = LocalizationDto.fromJson(jsonMap);
+          final languageKey = getLanguageKeyFromFileName(filepath);
+          return dto.toBo(languageKey: languageKey);
+        }),
+      );
+
+      return LocalizationBundle.androidXml(
+        paths: filePaths,
+        localizations: localizations,
+      );
     });
   }
 

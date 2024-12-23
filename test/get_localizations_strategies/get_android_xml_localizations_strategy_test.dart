@@ -15,7 +15,7 @@ void main() {
       expect(result.data, isA<LocalizationBundle>());
       expect(result.data, hasLength(1));
 
-      final localization = result.data.first;
+      final localization = result.data.localizations.first;
       expect(localization.languageKey, languageKeyMatcher);
       expect(localization.items, hasLength(4));
 
@@ -72,21 +72,21 @@ void main() {
 
     test('success EN', () async {
       await expectAStrategy(
-        strategy('test/sources/strings_a_en.xml'),
+        strategy(['test/sources/strings_a_en.xml']),
         languageKeyMatcher: 'en',
       );
     });
 
     test('success DE', () async {
       await expectAStrategy(
-        strategy('test/sources/strings_a_de.xml'),
+        strategy(['test/sources/strings_a_de.xml']),
         languageKeyMatcher: 'de',
       );
     });
 
     test('success UA', () async {
       await expectAStrategy(
-        strategy('test/sources/strings_a_ua.xml'),
+        strategy(['test/sources/strings_a_ua.xml']),
         languageKeyMatcher: 'ua',
       );
     });

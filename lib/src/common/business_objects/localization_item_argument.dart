@@ -1,14 +1,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:languagechecker/src/common/utils/has_friendly_name.dart';
 
 part 'localization_item_argument.freezed.dart';
 part 'localization_item_argument.g.dart';
 
 @freezed
-class LocalizationItemArgument with _$LocalizationItemArgument {
+class LocalizationItemArgument
+    with _$LocalizationItemArgument
+    implements HasFriendlyName {
   const factory LocalizationItemArgument({
     required LocalizationItemArgumentPosition position,
     required LocalizationItemArgumentType type,
   }) = _LocalizationItemArgument;
+
+  const LocalizationItemArgument._();
 
   factory LocalizationItemArgument.fromJson(Map<String, dynamic> json) =>
       _$LocalizationItemArgumentFromJson(json);
@@ -53,12 +58,9 @@ class LocalizationItemArgument with _$LocalizationItemArgument {
       type: LocalizationItemArgumentType.double,
     );
   }
-}
 
-extension LocalizationItemArgumentExtension on LocalizationItemArgument {
-  String get friendlyName {
-    return '${type.friendlyName}-${position.friendlyName}';
-  }
+  @override
+  String get friendlyName => '${type.friendlyName}-${position.friendlyName}';
 }
 
 enum LocalizationItemArgumentType {
@@ -82,11 +84,15 @@ extension LocalizationItemArgumentTypeExtension
 }
 
 @freezed
-class LocalizationItemArgumentPosition with _$LocalizationItemArgumentPosition {
+class LocalizationItemArgumentPosition
+    with _$LocalizationItemArgumentPosition
+    implements HasFriendlyName {
   const factory LocalizationItemArgumentPosition({
     required int index,
     required LocalizationItemArgumentPositionType type,
   }) = _LocalizationItemArgumentPosition;
+
+  const LocalizationItemArgumentPosition._();
 
   factory LocalizationItemArgumentPosition.fromJson(
     Map<String, dynamic> json,
@@ -106,13 +112,9 @@ class LocalizationItemArgumentPosition with _$LocalizationItemArgumentPosition {
       type: LocalizationItemArgumentPositionType.inOrder,
     );
   }
-}
 
-extension LocalizationItemArgumentPositionExtension
-    on LocalizationItemArgumentPosition {
-  String get friendlyName {
-    return '$index:${type.friendlyName}';
-  }
+  @override
+  String get friendlyName => '$index:${type.friendlyName}';
 }
 
 enum LocalizationItemArgumentPositionType {

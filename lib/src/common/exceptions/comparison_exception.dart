@@ -1,5 +1,6 @@
 import 'package:languagechecker/src/common/business_objects/business_objects.dart';
 import 'package:languagechecker/src/common/exceptions/app_exception.dart';
+import 'package:languagechecker/src/common/utils/has_friendly_name.dart';
 
 class ComparisonException implements AppException {
   final String message;
@@ -22,10 +23,10 @@ class ComparisonException implements AppException {
     Localization localization,
   ) = DuplicateLocalizationInBundleComparisonException;
 
-  factory ComparisonException.missLocalizationInBundle(
+  factory ComparisonException.missingLocalizationInBundle(
     LocalizationBundle bundle,
     Localization localization,
-  ) = MissLocalizationInBundleComparisonException;
+  ) = MissingLocalizationInBundleComparisonException;
 
   // --- Localization ---
 
@@ -41,41 +42,41 @@ class ComparisonException implements AppException {
     Localization otherLocalization,
   ) = MismatchedLocalizationLengthComparisonException;
 
-  factory ComparisonException.missItemInLocalization(
+  factory ComparisonException.missingItemInLocalization(
     LocalizationBundle bundle,
     Localization localization,
     LocalizationItem item,
-  ) = MissItemInLocalizationComparisonException;
+  ) = MissingItemInLocalizationComparisonException;
 
   // --- LocalizationItem ---
 
-  factory ComparisonException.mismatchedLocalizationItemKey(
+  factory ComparisonException.mismatchedItemKey(
     LocalizationBundle bundle,
     Localization localization,
     LocalizationItem item,
     LocalizationItem otherItem,
-  ) = MismatchedLocalizationItemKeyComparisonException;
+  ) = MismatchedItemKeyComparisonException;
 
-  factory ComparisonException.mismatchedLocalizationItemArgumentsLength(
+  factory ComparisonException.mismatchedArgumentsLength(
     LocalizationBundle bundle,
     Localization localization,
     LocalizationItem item,
     LocalizationItem otherItem,
-  ) = MismatchedLocalizationItemArgumentsLengthComparisonException;
+  ) = MismatchedArgumentsLengthComparisonException;
 
-  factory ComparisonException.missArgumentInLocalizationItem(
+  factory ComparisonException.missingArgumentInItem(
     LocalizationBundle bundle,
     Localization localization,
     LocalizationItem item,
     LocalizationItemArgument argument,
-  ) = MissArgumentInLocalizationItemComparisonException;
+  ) = MissingArgumentInItemComparisonException;
 
-  factory ComparisonException.extraArgumentInLocalizationItem(
+  factory ComparisonException.extraArgumentInItem(
     LocalizationBundle bundle,
     Localization localization,
     LocalizationItem item,
     LocalizationItemArgument argument,
-  ) = ExtraArgumentInLocalizationItemComparisonException;
+  ) = ExtraArgumentInItemComparisonException;
 
   @override
   String toString() {
@@ -84,7 +85,9 @@ class ComparisonException implements AppException {
   }
 }
 
-// TODO(any): implement bundle name in message
+extension on List<HasFriendlyName> {
+  String toExtensionPath() => map((item) => item.friendlyName).join(' -> ');
+}
 
 // --- Bundle ---
 
@@ -93,8 +96,8 @@ class EmptyBundleComparisonException extends ComparisonException {
 
   EmptyBundleComparisonException(this.bundle)
       : super(
-          'The number of localizations is zero. '
-          'For ${bundle.friendlyName} bundle.',
+          'The bundle has no localizations: '
+          '${[bundle].toExtensionPath()}.',
         );
 }
 
@@ -106,10 +109,10 @@ class MismatchedBundleLengthComparisonException extends ComparisonException {
     this.bundle,
     this.otherBundle,
   ) : super(
-          'The number of localizations is different. '
-          '${bundle.length} vs '
-          '${otherBundle.length} accordingly. '
-          'For "${bundle.friendlyName}" bundle.',
+          'The bundles has different number of localizations, '
+          '${bundle.localizations.length} vs '
+          '${otherBundle.localizations.length} accordingly: '
+          '${[bundle].toExtensionPath()}.',
         );
 }
 
@@ -122,21 +125,22 @@ class DuplicateLocalizationInBundleComparisonException
     this.bundle,
     this.localization,
   ) : super(
-          'The "${localization.languageKey}" localization is duplicated. '
-          'For "${bundle.friendlyName}" bundle.',
+          'The localization is duplicated: '
+          '${[localization, bundle].toExtensionPath()}.',
         );
 }
 
-class MissLocalizationInBundleComparisonException extends ComparisonException {
+class MissingLocalizationInBundleComparisonException
+    extends ComparisonException {
   final LocalizationBundle bundle;
   final Localization localization;
 
-  MissLocalizationInBundleComparisonException(
+  MissingLocalizationInBundleComparisonException(
     this.bundle,
     this.localization,
   ) : super(
-          'The "${localization.languageKey}" localization is missing. '
-          'For "${bundle.friendlyName}" bundle.',
+          'The localization is missing: '
+          '${[localization, bundle].toExtensionPath()}.',
         );
 }
 
@@ -153,10 +157,10 @@ class MismatchedLocalizationLanguageKeyComparisonException
     this.localization,
     this.otherLocalization,
   ) : super(
-          'The language keys of localizations are different, '
+          'The localization has different language keys, '
           '${localization.languageKey} vs '
-          '${otherLocalization.languageKey} accordingly. '
-          'For "${bundle.friendlyName}" bundle.',
+          '${otherLocalization.languageKey} accordingly: '
+          '${[localization, bundle].toExtensionPath()}.',
         );
 }
 
@@ -171,115 +175,98 @@ class MismatchedLocalizationLengthComparisonException
     this.localization,
     this.otherLocalization,
   ) : super(
-          'The number of items in localizations is different, '
+          'The localizations has different number of items, '
           '${localization.items.length} vs '
-          '${otherLocalization.items.length} accordingly. '
-          'For "${localization.languageKey}" localization '
-          'in "${bundle.friendlyName}" bundle.',
+          '${otherLocalization.items.length} accordingly: '
+          '${[localization, bundle].toExtensionPath()}.',
         );
 }
 
 // --- LocalizationItem ---
 
-class MissItemInLocalizationComparisonException extends ComparisonException {
+class MissingItemInLocalizationComparisonException extends ComparisonException {
   final LocalizationBundle bundle;
   final Localization localization;
   final LocalizationItem item;
 
-  MissItemInLocalizationComparisonException(
+  MissingItemInLocalizationComparisonException(
     this.bundle,
     this.localization,
     this.item,
   ) : super(
-          'The "${item.key}" key of item is missing. '
-          'For "${localization.languageKey}" localization '
-          'in "${bundle.friendlyName}" bundle.',
+          'The item is missing: '
+          '${[item, localization, bundle].toExtensionPath()}.',
         );
 }
 
-class MismatchedLocalizationItemKeyComparisonException
-    extends ComparisonException {
+class MismatchedItemKeyComparisonException extends ComparisonException {
   final LocalizationBundle bundle;
   final Localization localization;
   final LocalizationItem item;
   final LocalizationItem otherItem;
 
-  MismatchedLocalizationItemKeyComparisonException(
+  MismatchedItemKeyComparisonException(
     this.bundle,
     this.localization,
     this.item,
     this.otherItem,
   ) : super(
-          'The keys of localization items are different, '
+          'The item has different keys, '
           '${item.key} vs '
-          '${otherItem.key} accordingly. '
-          'For "${localization.languageKey}" localization '
-          'in "${bundle.friendlyName}" bundle.',
+          '${otherItem.key} accordingly: '
+          '${[item, localization, bundle].toExtensionPath()}.',
         );
 }
 
-class MismatchedLocalizationItemArgumentsLengthComparisonException
-    extends ComparisonException {
+class MismatchedArgumentsLengthComparisonException extends ComparisonException {
   final LocalizationBundle bundle;
   final Localization localization;
   final LocalizationItem item;
   final LocalizationItem otherItem;
 
-  MismatchedLocalizationItemArgumentsLengthComparisonException(
+  MismatchedArgumentsLengthComparisonException(
     this.bundle,
     this.localization,
     this.item,
     this.otherItem,
   ) : super(
-          'The number of arguments in localization items are different, '
+          'The item has different number of arguments, '
           '${item.arguments.length} vs '
-          '${otherItem.arguments.length} accordingly. '
-          'For "${item.key}" item '
-          'in "${localization.languageKey}" localization '
-          'in "${bundle.friendlyName}" bundle.',
+          '${otherItem.arguments.length} accordingly: '
+          '${[item, localization, bundle].toExtensionPath()}.',
         );
 }
 
-class MissArgumentInLocalizationItemComparisonException
-    extends ComparisonException {
+class MissingArgumentInItemComparisonException extends ComparisonException {
   final LocalizationBundle bundle;
   final Localization localization;
   final LocalizationItem item;
   final LocalizationItemArgument argument;
 
-  MissArgumentInLocalizationItemComparisonException(
+  MissingArgumentInItemComparisonException(
     this.bundle,
     this.localization,
     this.item,
     this.argument,
   ) : super(
-          'The "${argument.friendlyName}" key of item is missing. '
-          'For "${item.key}" localization '
-          'in "${localization.languageKey}" localization '
-          'in "${bundle.friendlyName}" bundle.',
+          'The argument is missing: '
+          '${[argument, item, localization, bundle].toExtensionPath()}.',
         );
 }
 
-class ExtraArgumentInLocalizationItemComparisonException
-    extends ComparisonException {
+class ExtraArgumentInItemComparisonException extends ComparisonException {
   final LocalizationBundle bundle;
   final Localization localization;
   final LocalizationItem item;
   final LocalizationItemArgument argument;
 
-  ExtraArgumentInLocalizationItemComparisonException(
+  ExtraArgumentInItemComparisonException(
     this.bundle,
     this.localization,
     this.item,
     this.argument,
   ) : super(
-          'The "${argument.friendlyName}" key of item is extra. '
-          'For "${item.key}" localization '
-          'in "${localization.languageKey}" localization '
-          'in "${bundle.friendlyName}" bundle.',
+          'The argument is extra: '
+          '${[argument, item, localization, bundle].toExtensionPath()}.',
         );
-}
-
-extension LocalizationBundleCopyExtension on LocalizationBundle {
-  String get friendlyName => 'BundleName';
 }

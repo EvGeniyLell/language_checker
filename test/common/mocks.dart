@@ -70,14 +70,14 @@ final uaLocalization = Localization(
   ],
 );
 
-final defaultLocalizationBundle = [
+final defaultLocalizations = [
   enLocalization,
   deLocalization,
   uaLocalization,
 ];
 
-extension LocalizationBundleCopyExtension on LocalizationBundle {
-  LocalizationBundle copyWith([
+extension LocalizationCopyExtension on List<Localization> {
+  List<Localization> copyWith([
     Localization Function(Localization)? transform,
   ]) {
     return map((e) => (transform?.call(e) ?? e).copyWith()).toList();

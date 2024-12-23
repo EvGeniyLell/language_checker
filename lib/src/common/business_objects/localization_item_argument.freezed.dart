@@ -141,9 +141,10 @@ class __$$LocalizationItemArgumentImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$LocalizationItemArgumentImpl implements _LocalizationItemArgument {
+class _$LocalizationItemArgumentImpl extends _LocalizationItemArgument {
   const _$LocalizationItemArgumentImpl(
-      {required this.position, required this.type});
+      {required this.position, required this.type})
+      : super._();
 
   factory _$LocalizationItemArgumentImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocalizationItemArgumentImplFromJson(json);
@@ -189,11 +190,12 @@ class _$LocalizationItemArgumentImpl implements _LocalizationItemArgument {
   }
 }
 
-abstract class _LocalizationItemArgument implements LocalizationItemArgument {
+abstract class _LocalizationItemArgument extends LocalizationItemArgument {
   const factory _LocalizationItemArgument(
           {required final LocalizationItemArgumentPosition position,
           required final LocalizationItemArgumentType type}) =
       _$LocalizationItemArgumentImpl;
+  const _LocalizationItemArgument._() : super._();
 
   factory _LocalizationItemArgument.fromJson(Map<String, dynamic> json) =
       _$LocalizationItemArgumentImpl.fromJson;
@@ -321,9 +323,10 @@ class __$$LocalizationItemArgumentPositionImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LocalizationItemArgumentPositionImpl
-    implements _LocalizationItemArgumentPosition {
+    extends _LocalizationItemArgumentPosition {
   const _$LocalizationItemArgumentPositionImpl(
-      {required this.index, required this.type});
+      {required this.index, required this.type})
+      : super._();
 
   factory _$LocalizationItemArgumentPositionImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -371,11 +374,12 @@ class _$LocalizationItemArgumentPositionImpl
 }
 
 abstract class _LocalizationItemArgumentPosition
-    implements LocalizationItemArgumentPosition {
+    extends LocalizationItemArgumentPosition {
   const factory _LocalizationItemArgumentPosition(
           {required final int index,
           required final LocalizationItemArgumentPositionType type}) =
       _$LocalizationItemArgumentPositionImpl;
+  const _LocalizationItemArgumentPosition._() : super._();
 
   factory _LocalizationItemArgumentPosition.fromJson(
           Map<String, dynamic> json) =

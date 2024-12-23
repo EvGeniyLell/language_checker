@@ -77,7 +77,7 @@ void main() {
       expect(result.data, isA<LocalizationBundle>());
       expect(result.data, hasLength(2));
 
-      for (final localization in result.data) {
+      for (final localization in result.data.localizations) {
         expect(localization.languageKey, anyOf('en', 'de'));
         expect(localization.items, hasLength(4));
         expectAStrategyItem(localization, key: 'name_of_feature');
@@ -88,7 +88,7 @@ void main() {
     }
 
     test('success feature', () async {
-      await expectAStrategy(strategy('test/sources/FeatureA.json'));
+      await expectAStrategy(strategy(['test/sources/FeatureA.json']));
     });
 
     // test('success DE', () async {

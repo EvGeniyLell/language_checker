@@ -11,12 +11,12 @@ void main() {
     required (String path, String key) r,
   }) async {
     Future<Localization> localization(String path, String key) async {
-      final task = await strategy(path);
+      final task = await strategy([path]);
       expect(task.succeeded, isTrue);
       expect(task.data, isA<LocalizationBundle>());
       expect(task.data, hasLength(1));
 
-      final item = task.data.first;
+      final item = task.data.localizations.first;
       expect(item.languageKey, key);
 
       return item;
