@@ -12,7 +12,7 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
   const GetIosXcstringsLocalizationsStrategy();
 
   @override
-  Task<List<Localization>> call(String filepath) {
+  Task<LocalizationBundle> call(String filepath) {
     return runTaskSafely(() async {
       final jsonMap = await jsonFromFile(filepath);
       final dto = LocalizationDto.fromJson(jsonMap);
@@ -99,7 +99,7 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
 }
 
 extension LocalizationDtoToBo on LocalizationDto {
-  List<Localization> toBoList() {
+  LocalizationBundle toBoList() {
     final Map<String, Localization> localizationsMap = {};
 
     Localization addItemToLocalization(

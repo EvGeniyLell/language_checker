@@ -19,7 +19,7 @@ class StringDto with _$StringDto {
 }
 
 // extension StringDtoToBos on StringDto {
-//   List<Localization> toBos() {
+//   LocalizationBundle toBos() {
 //     return localizations.map((localization) {
 //
 //       print('### SU: ${localization.stringUnit}');

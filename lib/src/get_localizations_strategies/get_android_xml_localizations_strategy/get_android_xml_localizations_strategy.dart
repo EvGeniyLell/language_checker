@@ -10,11 +10,13 @@ import 'package:languagechecker/src/get_localizations_strategies/get_localizatio
 import 'package:path/path.dart' as path;
 import 'package:xml2json/xml2json.dart';
 
+import '../../common/utils/json_map.dart';
+
 class GetAndroidXmlLocalizationsStrategy extends GetLocalizationsStrategy {
   const GetAndroidXmlLocalizationsStrategy();
 
   @override
-  Task<List<Localization>> call(String filepath) {
+  Task<LocalizationBundle> call(String filepath) {
     return runTaskSafely(() async {
       final jsonMap = await jsonFromFile(filepath);
       final dto = LocalizationDto.fromJson(jsonMap);

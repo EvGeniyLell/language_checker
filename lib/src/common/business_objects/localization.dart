@@ -4,6 +4,8 @@ import 'package:languagechecker/src/common/business_objects/localization_item.da
 part 'localization.freezed.dart';
 part 'localization.g.dart';
 
+typedef LocalizationBundle = List<Localization>;
+
 @freezed
 class Localization with _$Localization {
   const factory Localization({

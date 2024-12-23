@@ -7,12 +7,12 @@ void main() {
 
   group('GetAndroidXmlLocalizationsStrategy', () {
     Future<void> expectAStrategy(
-      Task<List<Localization>> task, {
+      Task<LocalizationBundle> task, {
       required dynamic languageKeyMatcher,
     }) async {
       final result = await task;
       expect(result.succeeded, isTrue);
-      expect(result.data, isA<List<Localization>>());
+      expect(result.data, isA<LocalizationBundle>());
       expect(result.data, hasLength(1));
 
       final localization = result.data.first;

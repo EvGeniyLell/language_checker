@@ -13,7 +13,7 @@ void main() {
     Future<Localization> localization(String path, String key) async {
       final task = await strategy(path);
       expect(task.succeeded, isTrue);
-      expect(task.data, isA<List<Localization>>());
+      expect(task.data, isA<LocalizationBundle>());
       expect(task.data, hasLength(1));
 
       final item = task.data.first;

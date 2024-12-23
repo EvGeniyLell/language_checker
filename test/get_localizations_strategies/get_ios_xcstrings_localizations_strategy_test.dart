@@ -71,10 +71,10 @@ void main() {
       }
     }
 
-    Future<void> expectAStrategy(Task<List<Localization>> task) async {
+    Future<void> expectAStrategy(Task<LocalizationBundle> task) async {
       final result = await task;
       expect(result.succeeded, isTrue);
-      expect(result.data, isA<List<Localization>>());
+      expect(result.data, isA<LocalizationBundle>());
       expect(result.data, hasLength(2));
 
       for (final localization in result.data) {
