@@ -27,7 +27,7 @@ class GetAndroidXmlLocalizationsStrategy extends GetLocalizationsStrategy {
       final localizations = await Future.wait(
         filePaths.map((filePath) async {
           final jsonMap = await jsonFromFile(filePath);
-          final dto = JsonMap(filePath: filePath, map: jsonMap)
+          final dto = JsonMap(source: filePath, map: jsonMap)
               .parseTo(LocalizationDto.fromJson);
           final languageKey = getLanguageKeyFromFileName(filePath);
           return dto.toBo(languageKey: languageKey);

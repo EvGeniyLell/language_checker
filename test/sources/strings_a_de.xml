@@ -1,5 +1,5 @@
 <resources>
-    <string name2="name_of_feature">Das "A" Feature.</string>
+    <string name="name_of_feature">Das "A" Feature.</string>
     <string name="welcome_message">Hallo, %1$s! Sie haben %2$d neue Nachrichten.</string>
     <plurals name="match_available">
         <item quantity="one">%1$s: %2$d Treffer.</item>

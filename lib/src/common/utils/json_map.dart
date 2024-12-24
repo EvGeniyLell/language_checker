@@ -1,3 +1,5 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 /// A wrapper around a JSON map that provides enhanced error handling
 /// by tracking the path to the location where an exception occurred.
 /// This allows for more informative error messages, indicating the exact
@@ -5,59 +7,64 @@
 ///
 /// For example:
 /// Error: type 'Null' is not a subtype of type 'String' in type cast
-/// - at ./resources/string[0].name
+/// - at ./resources/string[0].name,
+/// - in file test/sources/strings_a_de.xml
 class JsonMap implements Map<String, dynamic> {
-  final String _filePath;
-  final String _mapPath;
+  static const String root = '.';
+
+  final JsonMapRootData _rootData;
   final Map<String, dynamic> _map;
-  final JsonMap? _parent;
-  late String _lastAskedPath = _mapPath;
+  final String _mapPath;
 
-  JsonMap({
-    required String filePath,
+  factory JsonMap({
+    required String source,
     required Map<String, dynamic> map,
-    String mapPath = '.',
-    JsonMap? parent,
-  })  : _filePath = filePath,
-        _mapPath = mapPath,
-        _map = map,
-        _parent = parent;
-
-  void _setLastAskedPath(String path) {
-    if (_parent != null) {
-      _parent._setLastAskedPath(path);
-    }
-    _lastAskedPath = path;
+  }) {
+    return JsonMap.internal(
+      rootData: JsonMapRootData(
+        source: source,
+        lastAskedPath: root,
+      ),
+      map: map,
+      mapPath: root,
+    );
   }
+
+  @visibleForTesting
+  JsonMap.internal({
+    required JsonMapRootData rootData,
+    required Map<String, dynamic> map,
+    required String mapPath,
+  })  : _rootData = rootData,
+        _mapPath = mapPath,
+        _map = map;
 
   @override
   dynamic operator [](Object? key) {
     final value = _map[key];
     if (value is Map<String, dynamic>) {
-      _setLastAskedPath('$_mapPath/$key');
-      return JsonMap(
-        filePath: _filePath,
-        mapPath: '$_mapPath/$key',
+      _rootData.lastAskedPath = _mapPath.andKey(key);
+      return JsonMap.internal(
+        rootData: _rootData,
+        mapPath: _mapPath.andKey(key),
         map: value,
-        parent: _parent ?? this,
       );
     }
     if (value is List) {
-      _setLastAskedPath('$_mapPath/$key[]');
+      _rootData.lastAskedPath = _mapPath.andIndexedKey(key);
       int index = 0;
-      return value.map((e) {
-        if (e is Map<String, dynamic>) {
-          return JsonMap(
-            filePath: _filePath,
-            mapPath: '$_mapPath/$key[${index++}]',
-            map: e,
-            parent: _parent ?? this,
+      return value.map((iMap) {
+        if (iMap is Map<String, dynamic>) {
+          return JsonMap.internal(
+            rootData: _rootData,
+            mapPath: _mapPath.andIndexedKey(key, index++),
+            map: iMap,
           );
         }
-        return e;
+        return iMap;
       }).toList();
     }
-    _setLastAskedPath('$_mapPath.$key');
+    _rootData.lastAskedPath = _mapPath.andValue(key);
     return value;
   }
 
@@ -84,7 +91,7 @@ class JsonMap implements Map<String, dynamic> {
       if (error is JsonMapException) {
         rethrow;
       }
-      throw JsonMapException(error, _lastAskedPath);
+      throw JsonMapException(error, _rootData);
     }
   }
 
@@ -172,14 +179,33 @@ class JsonMap implements Map<String, dynamic> {
   }
 }
 
+class JsonMapRootData {
+  final String source;
+  String lastAskedPath;
+
+  JsonMapRootData({
+    required this.source,
+    required this.lastAskedPath,
+  });
+}
+
 class JsonMapException implements Exception {
   final Object exception;
-  final String path;
+  final JsonMapRootData data;
 
-  const JsonMapException(this.exception, this.path);
+  const JsonMapException(this.exception, this.data);
 
   @override
   String toString() {
-    return '$exception at $path';
+    return '$exception at ${data.lastAskedPath}, in ${data.source}';
   }
+}
+
+extension on String {
+  String andKey(Object? key) => '$this/$key';
+
+  String andIndexedKey(Object? key, [int index = -1]) =>
+      '$this/$key[${index < 0 ? '' : '$index'}]';
+
+  String andValue(Object? key) => '$this.$key';
 }
