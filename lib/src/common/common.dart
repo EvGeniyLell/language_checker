@@ -6,3 +6,4 @@ export 'utils/app_file_extension.dart';
 //export 'utils/printer.dart';
 export 'utils/task.dart';
 export 'use_cases/comparison_use_case.dart';
+export 'utils/json_map.dart';

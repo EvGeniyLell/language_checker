@@ -16,13 +16,15 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
     return runTaskSafely(() async {
       if (filePaths.length != 1) {
         throw UnexpectedException(
-          'Expected exactly one file path, but got ${filePaths.length}',
+          'Expected exactly one file path, because xcstrings '
+          'it is already a bundle, but got ${filePaths.length}',
         );
       }
 
       final filePath = filePaths.first;
       final jsonMap = await jsonFromFile(filePath);
-      final dto = LocalizationDto.fromJson(jsonMap);
+      final dto = JsonMap(source: filePath, map: jsonMap)
+          .parseTo(LocalizationDto.fromJson);
 
       return LocalizationBundle.iosXCString(
         path: filePath,
