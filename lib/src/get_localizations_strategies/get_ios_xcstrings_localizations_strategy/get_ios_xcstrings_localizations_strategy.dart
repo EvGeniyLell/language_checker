@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:languagechecker/src/common/common.dart';
 import 'package:languagechecker/src/get_localizations_strategies/get_ios_xcstrings_localizations_strategy/dtos/dtos.dart';
 import 'package:languagechecker/src/get_localizations_strategies/get_localizations_strategy.dart';
+import 'package:meta/meta.dart';
 
 class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
   const GetIosXcstringsLocalizationsStrategy();
@@ -34,6 +35,7 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
   }
 
   /// Load the json map from the file.
+  @visibleForTesting
   Future<Map<String, dynamic>> jsonFromFile(String filepath) async {
     final rawContent =
         await File(filepath).toDirectoryCurrentPathRelated().readAsString();
@@ -48,6 +50,7 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
   /// has a key-value structure for the `strings`,
   /// and `strings.localizations` fields,
   /// but the `Ios:LocalizationDto` expects them to be arrays.
+  @visibleForTesting
   void makeArray(Map<String, dynamic> map) {
     R? get<R>(Map<String, dynamic> m, String key) {
       if (m.containsKey(key)) {
@@ -109,6 +112,7 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
   }
 }
 
+@visibleForTesting
 extension LocalizationDtoToBo on LocalizationDto {
   List<Localization> toBoList() {
     final Map<String, Localization> localizationsMap = {};
@@ -138,6 +142,7 @@ extension LocalizationDtoToBo on LocalizationDto {
   }
 }
 
+@visibleForTesting
 extension StringLocalizationVariationDtoToBo on StringLocalizationVariationDto {
   StringLocalizationVariationPluralDto defaultPlural() {
     return plurals.firstWhereOrNull((p) => p.key == 'other') ?? plurals.first;
@@ -152,6 +157,7 @@ extension StringLocalizationVariationDtoToBo on StringLocalizationVariationDto {
   }
 }
 
+@visibleForTesting
 extension StringLocalizationUnitDtoToBo on StringLocalizationUnitDto {
   String toMessage() {
     return value;
@@ -203,6 +209,7 @@ extension StringLocalizationUnitDtoToBo on StringLocalizationUnitDto {
           }
         }
 
+@visibleForTesting
 extension StringLocalizationSubstitutionsDtoToBo
     on StringLocalizationSubstitutionsDto {
   String? toMessage() {
@@ -214,6 +221,7 @@ extension StringLocalizationSubstitutionsDtoToBo
     }
   }
 
+@visibleForTesting
 extension StringLocalizationDtoToBo on StringLocalizationDto {
   LocalizationItem toBo(String key) {
     final message = stringUnit?.toMessage() ??

@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:languagechecker/src/common/business_objects/business_objects.dart';
 import 'package:languagechecker/src/common/exceptions/exceptions.dart';
-import 'package:languagechecker/src/common/utils/task.dart';
+import 'package:languagechecker/src/common/utils/app_task.dart';
 
 class ComparisonUseCase {
   const ComparisonUseCase();
