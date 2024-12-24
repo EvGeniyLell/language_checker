@@ -76,6 +76,8 @@ final defaultLocalizations = [
   uaLocalization,
 ];
 
+// --- Copy With ---------------------------------------------------------------
+
 extension LocalizationCopyExtension on List<Localization> {
   List<Localization> copyWith([
     Localization Function(Localization)? transform,
@@ -109,16 +111,25 @@ extension LocalizationBundleDeepCopyExtension on LocalizationBundle {
     return copyWith(localizations: l);
   }
 
+  LocalizationBundle copyWithLocalization(
+    bool Function(Localization) localizationFilter,
+    Localization Function(Localization) transform,
+  ) {
+    return copyWithLocalizations((localizations) {
+      return localizations.map((l) {
+        return localizationFilter(l) ? transform(l) : l;
+      }).toList();
+    });
+  }
+
   LocalizationBundle copyWithLocalizationItems(
     bool Function(Localization) localizationFilter,
     List<LocalizationItem> Function(List<LocalizationItem>) transform,
   ) {
-    final l = localizations.map((l) {
-      return localizationFilter(l)
-          ? l.copyWith(items: transform(l.items.copyWith()))
-          : l.copyWith();
-    }).toList();
-    return copyWith(localizations: l);
+    return copyWithLocalization(
+      localizationFilter,
+      (l) => l.copyWith(items: transform(l.items.copyWith())),
+    );
   }
 
   LocalizationBundle copyWithLocalizationItem(
@@ -126,18 +137,12 @@ extension LocalizationBundleDeepCopyExtension on LocalizationBundle {
     bool Function(LocalizationItem) itemFilter,
     LocalizationItem Function(LocalizationItem) transform,
   ) {
-    final newLocalizations = localizations.map((localization) {
-      return localizationFilter(localization)
-          ? localization.copyWith(
-              items: localization.items.map((item) {
-                return itemFilter(item)
-                    ? transform(item.copyWith())
-                    : item.copyWith();
-              }).toList(),
-            )
-          : localization.copyWith();
-    }).toList();
-    return copyWith(localizations: newLocalizations);
+    return copyWithLocalizationItems(
+      localizationFilter,
+      (items) => items.map((item) {
+        return itemFilter(item) ? transform(item) : item;
+      }).toList(),
+    );
   }
 
   LocalizationBundle copyWithLocalizationItemArguments(
@@ -146,27 +151,25 @@ extension LocalizationBundleDeepCopyExtension on LocalizationBundle {
     List<LocalizationItemArgument> Function(List<LocalizationItemArgument>)
         transform,
   ) {
-    final newLocalizations = localizations.map((localization) {
-      return localizationFilter(localization)
-          ? localization.copyWith(
-              items: localization.items.map((item) {
-                return itemFilter(item)
-                    ? item.copyWith(
-                        arguments: transform(item.arguments.copyWith()),
-                      )
-                    : item.copyWith();
-              }).toList(),
-            )
-          : localization.copyWith();
-    }).toList();
-    return copyWith(localizations: newLocalizations);
+    return copyWithLocalizationItem(
+      localizationFilter,
+      itemFilter,
+      (item) => item.copyWith(arguments: transform(item.arguments.copyWith())),
+    );
   }
-// LocalizationBundle copyWithLocalizationByIndex(
-//   int index,
-//   Localization Function(Localization) transform,
-// ) {
-//   final l = localizations.copyWith();
-//   l[index] = transform(l[index]);
-//   return copyWith(localizations: l);
-// }
+
+  LocalizationBundle copyWithLocalizationItemArgument(
+    bool Function(Localization) localizationFilter,
+    bool Function(LocalizationItem) itemFilter,
+    bool Function(LocalizationItemArgument) argumentFilter,
+    LocalizationItemArgument Function(LocalizationItemArgument) transform,
+  ) {
+    return copyWithLocalizationItemArguments(
+      localizationFilter,
+      itemFilter,
+      (arguments) => arguments.map((argument) {
+        return argumentFilter(argument) ? transform(argument) : argument;
+      }).toList(),
+    );
+  }
 }
