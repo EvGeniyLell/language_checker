@@ -13,7 +13,7 @@ void main() {
       final result = await task;
       expect(result.succeeded, isTrue);
       expect(result.data, isA<LocalizationBundle>());
-      expect(result.data, hasLength(1));
+      expect(result.data.localizations, hasLength(1));
 
       final localization = result.data.localizations.first;
       expect(localization.languageKey, languageKeyMatcher);

@@ -10,6 +10,8 @@ import 'package:languagechecker/src/get_localizations_strategies/get_localizatio
 import 'package:path/path.dart' as path;
 import 'package:xml2json/xml2json.dart';
 
+import '../../common/utils/json_map.dart';
+
 class GetAndroidXmlLocalizationsStrategy extends GetLocalizationsStrategy {
   const GetAndroidXmlLocalizationsStrategy();
 
@@ -23,10 +25,11 @@ class GetAndroidXmlLocalizationsStrategy extends GetLocalizationsStrategy {
       }
 
       final localizations = await Future.wait(
-        filePaths.map((filepath) async {
-          final jsonMap = await jsonFromFile(filepath);
-          final dto = LocalizationDto.fromJson(jsonMap);
-          final languageKey = getLanguageKeyFromFileName(filepath);
+        filePaths.map((filePath) async {
+          final jsonMap = await jsonFromFile(filePath);
+          final dto = JsonMap(filePath: filePath, map: jsonMap)
+              .parseTo(LocalizationDto.fromJson);
+          final languageKey = getLanguageKeyFromFileName(filePath);
           return dto.toBo(languageKey: languageKey);
         }),
       );

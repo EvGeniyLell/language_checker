@@ -75,7 +75,7 @@ void main() {
       final result = await task;
       expect(result.succeeded, isTrue);
       expect(result.data, isA<LocalizationBundle>());
-      expect(result.data, hasLength(2));
+      expect(result.data.localizations, hasLength(2));
 
       for (final localization in result.data.localizations) {
         expect(localization.languageKey, anyOf('en', 'de'));
