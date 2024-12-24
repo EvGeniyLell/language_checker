@@ -100,3 +100,73 @@ extension LocalizationItemArgumentCopyExtension
     return map((e) => (transform?.call(e) ?? e).copyWith()).toList();
   }
 }
+
+extension LocalizationBundleDeepCopyExtension on LocalizationBundle {
+  LocalizationBundle copyWithLocalizations(
+    List<Localization> Function(List<Localization>) transform,
+  ) {
+    final l = transform(localizations.copyWith());
+    return copyWith(localizations: l);
+  }
+
+  LocalizationBundle copyWithLocalizationItems(
+    bool Function(Localization) localizationFilter,
+    List<LocalizationItem> Function(List<LocalizationItem>) transform,
+  ) {
+    final l = localizations.map((l) {
+      return localizationFilter(l)
+          ? l.copyWith(items: transform(l.items.copyWith()))
+          : l.copyWith();
+    }).toList();
+    return copyWith(localizations: l);
+  }
+
+  LocalizationBundle copyWithLocalizationItem(
+    bool Function(Localization) localizationFilter,
+    bool Function(LocalizationItem) itemFilter,
+    LocalizationItem Function(LocalizationItem) transform,
+  ) {
+    final newLocalizations = localizations.map((localization) {
+      return localizationFilter(localization)
+          ? localization.copyWith(
+              items: localization.items.map((item) {
+                return itemFilter(item)
+                    ? transform(item.copyWith())
+                    : item.copyWith();
+              }).toList(),
+            )
+          : localization.copyWith();
+    }).toList();
+    return copyWith(localizations: newLocalizations);
+  }
+
+  LocalizationBundle copyWithLocalizationItemArguments(
+    bool Function(Localization) localizationFilter,
+    bool Function(LocalizationItem) itemFilter,
+    List<LocalizationItemArgument> Function(List<LocalizationItemArgument>)
+        transform,
+  ) {
+    final newLocalizations = localizations.map((localization) {
+      return localizationFilter(localization)
+          ? localization.copyWith(
+              items: localization.items.map((item) {
+                return itemFilter(item)
+                    ? item.copyWith(
+                        arguments: transform(item.arguments.copyWith()),
+                      )
+                    : item.copyWith();
+              }).toList(),
+            )
+          : localization.copyWith();
+    }).toList();
+    return copyWith(localizations: newLocalizations);
+  }
+// LocalizationBundle copyWithLocalizationByIndex(
+//   int index,
+//   Localization Function(Localization) transform,
+// ) {
+//   final l = localizations.copyWith();
+//   l[index] = transform(l[index]);
+//   return copyWith(localizations: l);
+// }
+}

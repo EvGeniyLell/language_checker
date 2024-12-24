@@ -1,32 +1,36 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:languagechecker/src/common/business_objects/localization.dart';
 import 'package:languagechecker/src/common/utils/has_friendly_name.dart';
 import 'package:path/path.dart';
 
-class LocalizationBundle implements HasFriendlyName {
-  final BundleSource source;
-  final List<Localization> localizations;
+part 'localization_bundle.freezed.dart';
 
-  const LocalizationBundle(this.source, this.localizations);
+@freezed
+class LocalizationBundle with _$LocalizationBundle implements HasFriendlyName {
+  const factory LocalizationBundle({
+    required BundleSource source,
+    required List<Localization> localizations,
+  }) = _LocalizationBundle;
+
+  const LocalizationBundle._();
 
   factory LocalizationBundle.androidXml({
     required List<String> paths,
     required List<Localization> localizations,
-  }) =>
-      LocalizationBundle(AndroidXmlBundleSource(paths), localizations);
+  }) {
+    return LocalizationBundle(
+      source: AndroidXmlBundleSource(paths),
+      localizations: localizations,
+    );
+  }
 
   factory LocalizationBundle.iosXCString({
     required String path,
     required List<Localization> localizations,
-  }) =>
-      LocalizationBundle(IosXCStringBundleSource(path), localizations);
-
-  LocalizationBundle copyWith({
-    BundleSource? source,
-    List<Localization>? localizations,
   }) {
     return LocalizationBundle(
-      source ?? this.source,
-      localizations ?? this.localizations,
+      source: IosXCStringBundleSource(path),
+      localizations: localizations,
     );
   }
 
