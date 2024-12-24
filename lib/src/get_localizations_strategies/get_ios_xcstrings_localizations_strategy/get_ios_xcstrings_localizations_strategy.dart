@@ -17,7 +17,7 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
       if (filePaths.length != 1) {
         throw UnexpectedException(
           'Expected exactly one file path, because xcstrings '
-          'it is already a bundle, but got ${filePaths.length}',
+          'is already a bundle, but got ${filePaths.length}',
         );
       }
 
@@ -42,9 +42,9 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
     return jsonContent as Map<String, dynamic>;
   }
 
-  /// Make some fields of this map to Array.
+  /// Convert certain fields of the map to arrays.
   ///
-  /// - Reason: the `CXStrings` for `ios` files
+  /// - Reason: The `CXStrings` for `ios` files
   /// has a key-value structure for the `strings`,
   /// and `strings.localizations` fields,
   /// but the `Ios:LocalizationDto` expects them to be arrays.
@@ -57,10 +57,10 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
     }
 
     List toList(
-      dynamic d, {
-      String keyName = 'key',
-      String valueName = 'value',
-    }) {
+        dynamic d, {
+          String keyName = 'key',
+          String valueName = 'value',
+        }) {
       if (d is List) {
         return d;
       }
@@ -183,7 +183,7 @@ extension StringLocalizationUnitDtoToBo on StringLocalizationUnitDto {
             'Cannot parse argument position index from ${m.group(1)}'
             ' in value $value',
           );
-        }
+            }
 
         return LocalizationItemArgument(
           position: LocalizationItemArgumentPosition(
@@ -200,19 +200,19 @@ extension StringLocalizationUnitDtoToBo on StringLocalizationUnitDto {
       }),
     ];
     return arguments;
-  }
-}
+          }
+        }
 
 extension StringLocalizationSubstitutionsDtoToBo
     on StringLocalizationSubstitutionsDto {
   String? toMessage() {
     return variation?.toMessage();
-  }
+      }
 
   List<LocalizationItemArgument> toArguments() {
     return variation?.toArguments() ?? [];
+    }
   }
-}
 
 extension StringLocalizationDtoToBo on StringLocalizationDto {
   LocalizationItem toBo(String key) {
