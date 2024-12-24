@@ -10,8 +10,6 @@ import 'package:languagechecker/src/get_localizations_strategies/get_localizatio
 import 'package:path/path.dart' as path;
 import 'package:xml2json/xml2json.dart';
 
-import '../../common/utils/json_map.dart';
-
 class GetAndroidXmlLocalizationsStrategy extends GetLocalizationsStrategy {
   const GetAndroidXmlLocalizationsStrategy();
 
