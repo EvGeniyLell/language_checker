@@ -52,7 +52,39 @@ class AndroidXmlBundleSource extends BundleSource {
 
   @override
   String get friendlyName {
-    return 'AndroidXmlBundleSource: ${paths.map(basename).join(', ')}';
+    final files = paths.map(basename);
+    return 'AndroidXmlBundleSource: ${files.merge()}';
+  }
+}
+
+extension on Iterable<String> {
+  String merge() {
+    if (isEmpty) {
+      return '';
+    }
+
+    final minLength =
+        map((item) => item.length).reduce((a, b) => a < b ? a : b);
+
+    String prefix = '';
+    String suffix = '';
+
+    for (int i = 0; minLength > i; i++) {
+      final testPrefix = first.substring(0, i);
+      if (every((item) => item.startsWith(testPrefix))) {
+        prefix = testPrefix;
+      }
+      final testSuffix = first.substring(minLength - i);
+      if (every((item) => item.endsWith(testSuffix))) {
+        suffix = testSuffix;
+      }
+    }
+
+    final center = map((item) {
+      return item.replaceFirst(prefix, '').replaceFirst(suffix, '');
+    }).join('|');
+
+    return '$prefix${center.isEmpty ? '' : '[$center]'}$suffix';
   }
 }
 

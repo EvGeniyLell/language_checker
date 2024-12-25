@@ -13,6 +13,9 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
   const GetIosXcstringsLocalizationsStrategy();
 
   @override
+  String get uuid => 'iosXCStrings';
+
+  @override
   Task<LocalizationBundle> call(List<String> filePaths) {
     return runTaskSafely(() async {
       if (filePaths.length != 1) {
@@ -60,10 +63,10 @@ class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
     }
 
     List toList(
-        dynamic d, {
-          String keyName = 'key',
-          String valueName = 'value',
-        }) {
+      dynamic d, {
+      String keyName = 'key',
+      String valueName = 'value',
+    }) {
       if (d is List) {
         return d;
       }
@@ -189,7 +192,7 @@ extension StringLocalizationUnitDtoToBo on StringLocalizationUnitDto {
             'Cannot parse argument position index from ${m.group(1)}'
             ' in value $value',
           );
-            }
+        }
 
         return LocalizationItemArgument(
           position: LocalizationItemArgumentPosition(
@@ -206,20 +209,20 @@ extension StringLocalizationUnitDtoToBo on StringLocalizationUnitDto {
       }),
     ];
     return arguments;
-          }
-        }
+  }
+}
 
 @visibleForTesting
 extension StringLocalizationSubstitutionsDtoToBo
     on StringLocalizationSubstitutionsDto {
   String? toMessage() {
     return variation?.toMessage();
-      }
+  }
 
   List<LocalizationItemArgument> toArguments() {
     return variation?.toArguments() ?? [];
-    }
   }
+}
 
 @visibleForTesting
 extension StringLocalizationDtoToBo on StringLocalizationDto {

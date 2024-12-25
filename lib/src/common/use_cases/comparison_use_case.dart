@@ -127,7 +127,7 @@ class LocalizationComparer extends Comparer {
       if (rItem == null) {
         exceptions.add(
           ComparisonException.missingItemInLocalization(
-            bundleComparer.lBundle,
+            bundleComparer.rBundle,
             lLocalization,
             lItem,
           ),
@@ -185,7 +185,8 @@ class ItemComparer extends Comparer {
     final rUnusedArguments = <LocalizationItemArgument>[...rItem.arguments];
     for (final lArg in lItem.arguments) {
       final rArg = rItem.arguments.firstWhereOrNull((r) {
-        final match = lArg.position == r.position &&
+        // here we ignore position type
+        final match = lArg.position.index == r.position.index &&
             lArg.type == r.type &&
             rUnusedArguments.contains(r);
         if (match) {
@@ -196,7 +197,7 @@ class ItemComparer extends Comparer {
       if (rArg == null) {
         exceptions.add(
           ComparisonException.missingArgumentInItem(
-            localizationComparer.bundleComparer.lBundle,
+            localizationComparer.bundleComparer.rBundle,
             localizationComparer.lLocalization,
             lItem,
             lArg,

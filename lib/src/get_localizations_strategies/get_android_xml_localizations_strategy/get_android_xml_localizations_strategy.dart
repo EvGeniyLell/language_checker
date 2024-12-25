@@ -14,6 +14,9 @@ class GetAndroidXmlLocalizationsStrategy extends GetLocalizationsStrategy {
   const GetAndroidXmlLocalizationsStrategy();
 
   @override
+  String get uuid => 'androidXml';
+
+  @override
   Task<LocalizationBundle> call(List<String> filePaths) {
     return runTaskSafely(() async {
       if (filePaths.isEmpty) {
