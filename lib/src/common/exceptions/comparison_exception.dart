@@ -86,7 +86,7 @@ class ComparisonException implements AppException {
 }
 
 extension on List<HasFriendlyName> {
-  String toExtensionPath() => map((item) => item.friendlyName).join(' -> ');
+  String toExtensionPath() => map((item) => item.friendlyName).join('/');
 }
 
 // --- Bundle ---
