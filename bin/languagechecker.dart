@@ -1,11 +1,17 @@
 import 'dart:io';
 
-import 'package:languagechecker/languagechecker.dart' as languagechecker;
+import 'package:languagechecker/languagechecker.dart';
 
-void main(List<String> arguments) {
-  print('### Arguments: $arguments');
-  print('### ${Directory.current.path}');
-  print('Hello world: ${languagechecker.calculate()}!');
-  const languagechecker.LanguageChecker()(arguments);
-  print('### Done');
+Future<void> main(List<String> arguments) async {
+  final exitReason = await const LanguageChecker()(arguments);
+  exit(exitReason.code);
+}
+
+extension ExitReasonExtension on ExitReason {
+  int get code => switch (this) {
+        ExitReason.success => 0,
+        ExitReason.runnersError => 1,
+        ExitReason.loadingError => 2,
+        ExitReason.comparisonError => 3,
+      };
 }
