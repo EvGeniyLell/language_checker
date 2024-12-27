@@ -60,7 +60,7 @@ class LocalizationItemArgument
   }
 
   @override
-  String get friendlyName => '${type.friendlyName}(${position.friendlyName})';
+  String get friendlyName => '${type.friendlyName}:${position.friendlyName}';
 }
 
 enum LocalizationItemArgumentType {
@@ -114,7 +114,7 @@ class LocalizationItemArgumentPosition
   }
 
   @override
-  String get friendlyName => '#$index:${type.friendlyName}';
+  String get friendlyName => '${type.friendlyName}[$index]';
 }
 
 enum LocalizationItemArgumentPositionType {
