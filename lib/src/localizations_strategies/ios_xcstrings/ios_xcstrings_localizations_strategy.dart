@@ -1,16 +1,14 @@
-library;
-
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:languagechecker/src/common/common.dart';
-import 'package:languagechecker/src/get_localizations_strategies/get_ios_xcstrings_localizations_strategy/dtos/dtos.dart';
-import 'package:languagechecker/src/get_localizations_strategies/get_localizations_strategy.dart';
+import 'package:languagechecker/src/localizations_strategies/ios_xcstrings/dtos/dtos.dart';
+import 'package:languagechecker/src/localizations_strategies/localizations_strategy.dart';
 import 'package:meta/meta.dart';
 
-class GetIosXcstringsLocalizationsStrategy extends GetLocalizationsStrategy {
-  const GetIosXcstringsLocalizationsStrategy();
+class IosXcstringsLocalizationsStrategy extends LocalizationsStrategy {
+  const IosXcstringsLocalizationsStrategy();
 
   @override
   String get uuid => 'iosXCStrings';

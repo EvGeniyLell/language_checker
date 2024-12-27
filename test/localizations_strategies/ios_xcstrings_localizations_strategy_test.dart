@@ -1,9 +1,9 @@
 import 'package:languagechecker/src/common/common.dart';
-import 'package:languagechecker/src/get_localizations_strategies/get_ios_xcstrings_localizations_strategy/get_ios_xcstrings_localizations_strategy.dart';
+import 'package:languagechecker/src/localizations_strategies/ios_xcstrings/ios_xcstrings_localizations_strategy.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const strategy = GetIosXcstringsLocalizationsStrategy();
+  const strategy = IosXcstringsLocalizationsStrategy();
 
   group('GetIosXcstringsLocalizationsStrategy', () {
     void expectAStrategyItem(Localization localization, {required String key}) {

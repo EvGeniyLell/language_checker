@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:languagechecker/src/get_localizations_strategies/get_ios_xcstrings_localizations_strategy/dtos/string_dto.dart';
+import 'package:languagechecker/src/localizations_strategies/ios_xcstrings/dtos/string_dto.dart';
 
 part 'localization_dto.freezed.dart';
 part 'localization_dto.g.dart';

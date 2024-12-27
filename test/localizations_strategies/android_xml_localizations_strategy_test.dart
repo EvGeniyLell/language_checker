@@ -1,9 +1,9 @@
 import 'package:languagechecker/src/common/common.dart';
-import 'package:languagechecker/src/get_localizations_strategies/get_android_xml_localizations_strategy/get_android_xml_localizations_strategy.dart';
+import 'package:languagechecker/src/localizations_strategies/android_xml/android_xml_localizations_strategy.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const strategy = GetAndroidXmlLocalizationsStrategy();
+  const strategy = AndroidXmlLocalizationsStrategy();
 
   Future<void> expectSuccessLocalization(
     Localization localization, {

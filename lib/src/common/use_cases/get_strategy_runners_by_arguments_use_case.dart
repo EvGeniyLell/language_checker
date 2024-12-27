@@ -5,14 +5,14 @@ import 'package:languagechecker/src/common/business_objects/business_objects.dar
 import 'package:languagechecker/src/common/exceptions/exceptions.dart';
 import 'package:languagechecker/src/common/utils/app_file_extension.dart';
 import 'package:languagechecker/src/common/utils/app_task.dart';
-import 'package:languagechecker/src/get_localizations_strategies/get_localizations_strategy.dart';
+import 'package:languagechecker/src/localizations_strategies/localizations_strategy.dart';
 import 'package:meta/meta.dart';
 
 class GetStrategyRunnersByArgumentsUseCase {
   @visibleForTesting
-  static const List<GetLocalizationsStrategy> strategies = [
-    GetAndroidXmlLocalizationsStrategy(),
-    GetIosXcstringsLocalizationsStrategy(),
+  static const List<LocalizationsStrategy> strategies = [
+    AndroidXmlLocalizationsStrategy(),
+    IosXcstringsLocalizationsStrategy(),
   ];
 
   const GetStrategyRunnersByArgumentsUseCase();
@@ -52,7 +52,7 @@ class GetStrategyRunnersByArgumentsUseCase {
   }
 
   @visibleForTesting
-  GetLocalizationsStrategy getStrategyByUUID(String uuid) {
+  LocalizationsStrategy getStrategyByUUID(String uuid) {
     final strategy = strategies.firstWhereOrNull(
       (strategy) => strategy.uuid == uuid,
     );
@@ -74,7 +74,7 @@ class GetStrategyRunnersByArgumentsUseCase {
 
 @visibleForTesting
 class StrategyRunner {
-  final GetLocalizationsStrategy strategy;
+  final LocalizationsStrategy strategy;
   final List<String> files;
 
   StrategyRunner(this.strategy, this.files);

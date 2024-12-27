@@ -1,17 +1,15 @@
-library;
-
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:languagechecker/src/common/common.dart';
-import 'package:languagechecker/src/get_localizations_strategies/get_android_xml_localizations_strategy/dtos/dtos.dart';
-import 'package:languagechecker/src/get_localizations_strategies/get_localizations_strategy.dart';
+import 'package:languagechecker/src/localizations_strategies/android_xml/dtos/dtos.dart';
+import 'package:languagechecker/src/localizations_strategies/localizations_strategy.dart';
 import 'package:path/path.dart' as path;
 import 'package:xml2json/xml2json.dart';
 
-class GetAndroidXmlLocalizationsStrategy extends GetLocalizationsStrategy {
-  const GetAndroidXmlLocalizationsStrategy();
+class AndroidXmlLocalizationsStrategy extends LocalizationsStrategy {
+  const AndroidXmlLocalizationsStrategy();
 
   @override
   String get uuid => 'androidXml';
