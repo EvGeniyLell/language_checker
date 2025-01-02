@@ -115,10 +115,11 @@ class __$$LocalizationImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$LocalizationImpl implements _Localization {
+class _$LocalizationImpl extends _Localization {
   const _$LocalizationImpl(
       {required this.languageKey, required final List<LocalizationItem> items})
-      : _items = items;
+      : _items = items,
+        super._();
 
   factory _$LocalizationImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocalizationImplFromJson(json);
@@ -169,10 +170,11 @@ class _$LocalizationImpl implements _Localization {
   }
 }
 
-abstract class _Localization implements Localization {
+abstract class _Localization extends Localization {
   const factory _Localization(
       {required final String languageKey,
       required final List<LocalizationItem> items}) = _$LocalizationImpl;
+  const _Localization._() : super._();
 
   factory _Localization.fromJson(Map<String, dynamic> json) =
       _$LocalizationImpl.fromJson;

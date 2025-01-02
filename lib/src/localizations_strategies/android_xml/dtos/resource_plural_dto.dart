@@ -3,6 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'resource_plural_dto.freezed.dart';
 part 'resource_plural_dto.g.dart';
 
+// ignore_for_file: invalid_annotation_target
+
 @freezed
 class ResourcePluralDto with _$ResourcePluralDto {
   const factory ResourcePluralDto({

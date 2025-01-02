@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="name_of_feature">The "A" feature.</string>
-    <string name="welcome_message">Hello, %1$s! You have %2$d new messages.</string>
+    <string name="name_of_feature">Das "A" Feature.</string>
+    <string name="welcome_message">Hallo, %1$s! Sie haben %2$d neue Nachrichten.</string>
     <plurals name="match_available">
-        <item quantity="one">%1$s: %2$d match.</item>
-        <item quantity="other">%1$s: %2$d matches.</item>
+        <item quantity="one">%1$s: %2$d Treffer.</item>
+        <item quantity="other">%1$s: %2$d Treffer.</item>
+    </plurals>
+    <plurals name="downloaded_files">
+        <item quantity="one">%1$d Datei.</item>
+        <item quantity="few">%1$d Dateien.</item>
+        <item quantity="other">%1$d Dateien.</item>
     </plurals>
 </resources>

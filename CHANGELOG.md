@@ -1,3 +1,4 @@
-## 1.0.0
+## 0.0.2 
 
-- Initial version.
+- Alpha version.
+- Support comparing ios `xcstrings` and android `xml` files.

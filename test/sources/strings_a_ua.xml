@@ -4,7 +4,10 @@
     <string name="welcome_message">Привіт, %1$s! У вас %2$d нових повідомлень.</string>
     <plurals name="match_available">
         <item quantity="one">%1$s: %2$d співпадіння.</item>
-        <item quantity="few">%1$s: %2$d співпадіннь.</item>
-        <item quantity="other">%1$s: %2$d matches.</item>
+        <item quantity="other">%1$s: %2$d співпадіннь.</item>
+    </plurals>
+    <plurals name="downloaded_files">
+        <item quantity="one">%1$d файл.</item>
+        <item quantity="other">%1$d файлів.</item>
     </plurals>
 </resources>

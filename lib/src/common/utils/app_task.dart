@@ -17,7 +17,7 @@ Task<T> runTaskSafely<T>(
     final T result = await block();
     return TaskSucceeded<T>(result);
   } on Object catch (error, stackTrace) {
-    Printer().logError(error, stackTrace: stackTrace);
+    Printer().debugLogError(error, stackTrace: stackTrace);
     if (error is AppException) {
       return TaskFailed<T>(error);
     } else {

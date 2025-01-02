@@ -1,10 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:languagechecker/src/android/dtos/resource_plural_dto.dart';
-
-import 'package:languagechecker/src/android/dtos/resource_string_dto.dart';
+import 'package:languagechecker/src/localizations_strategies/android_xml/dtos/resource_plural_dto.dart';
+import 'package:languagechecker/src/localizations_strategies/android_xml/dtos/resource_string_dto.dart';
 
 part 'resources_dto.freezed.dart';
 part 'resources_dto.g.dart';
+
+// ignore_for_file: invalid_annotation_target
 
 @freezed
 class ResourcesDto with _$ResourcesDto {
